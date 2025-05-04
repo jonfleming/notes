@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Notes</h1>
+        <div class="note-container">
+            <textarea id="notepad" placeholder="Type or paste your note here..."></textarea>
+            <div id="status">Saved</div>
+        </div>
+        <div class="info">
+            <p>Share this URL with other devices to access this note.</p>
+        </div>
+        <details>
+            <summary>API Usage</summary>
+            <pre>
+        # Get note content (JSON):
+        curl http://notes.fleming.ai/api/notes/YOUR_NOTE_ID
+
+        # Get note content (plain text):
+        curl -H "Accept: text/plain" http://notes.fleming.ai/api/notes/YOUR_NOTE_ID
+
+        # Save note content:
+        curl -X POST -H "Content-Type: application/json" \
+            -d "{\"content\":\"Your text here\"}" \
+            http://notes.fleming.ai/api/notes/YOUR_NOTE_ID
+            </pre>
+        </details>        
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
