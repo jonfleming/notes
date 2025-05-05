@@ -1,4 +1,4 @@
-# TextShare
+# Notes
 
 A simple web app for sharing text notes between computers.
 

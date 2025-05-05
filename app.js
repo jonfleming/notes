@@ -1,5 +1,28 @@
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Close Tab/Window button logic
+    const closeTabBtn = document.getElementById('closeTabBtn');
+    if (closeTabBtn) {
+        closeTabBtn.addEventListener('click', () => {
+            window.close();
+        });
+    }
+    // Fullscreen button logic
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    if (fullscreenBtn) {
+        fullscreenBtn.addEventListener('click', () => {
+            const docElm = document.documentElement;
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            } else if (docElm.mozRequestFullScreen) { /* Firefox */
+                docElm.mozRequestFullScreen();
+            } else if (docElm.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+                docElm.webkitRequestFullscreen();
+            } else if (docElm.msRequestFullscreen) { /* IE/Edge */
+                docElm.msRequestFullscreen();
+            }
+        });
+    }
     const notepad = document.getElementById('notepad');
     const statusElement = document.getElementById('status');
     const saveBtn = document.getElementById('saveBtn');

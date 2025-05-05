@@ -94,6 +94,6 @@ app.get('*', (req, res) => {
 
 // Start server
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`TextShare server running on port ${PORT}`);
+  console.log(`Notes server running on port ${PORT}`);
   console.log(`Access the app at http://localhost:${PORT}`);
 });
