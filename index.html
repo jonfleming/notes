@@ -5,12 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Notes</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="select2.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
         <h1>Notes</h1>
-        <div class="note-container">
+        <div class="note-container form-control">
+            <select id="noteid-select" style="margin-bottom:8px;display:block;width:180px;max-width:100%;font-size:14px;"></select>
             <textarea id="notepad" placeholder="Type or paste your note here..."></textarea>
+            <div class="note-actions">
+                <button id="saveBtn" type="button">Save</button>
+                <button id="loadBtn" type="button">Load</button>
+            </div>
             <div id="status">Saved</div>
         </div>
         <div class="info">
@@ -32,6 +38,8 @@
             </pre>
         </details>        
     </div>
+    <script src="jquery.min.js"></script>
+    <script src="select2.min.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

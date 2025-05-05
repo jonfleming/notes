@@ -30,6 +30,28 @@ h1 {
     margin-bottom: 20px;
 }
 
+.note-actions {
+    margin: 10px 0 5px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.note-actions button {
+    padding: 6px 18px;
+    font-size: 15px;
+    border: 1px solid #4d90fe;
+    background: #f5faff;
+    color: #2563eb;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.note-actions button:hover {
+    background: #e3edff;
+    color: #174ea6;
+}
+
 textarea {
     width: 100%;
     height: 300px;

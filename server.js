@@ -18,7 +18,6 @@ fs.mkdir(dataDir, { recursive: true }).catch(err => {
 app.get('/api/notes/:id', async (req, res) => {
   try {
     const noteId = req.params.id;
-    console.log('Received request for note ID:', noteId);
     
     // Validate note ID format (alphanumeric only)
     if (!noteId.match(/^[a-zA-Z0-9]+$/)) {
