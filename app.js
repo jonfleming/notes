@@ -1,11 +1,41 @@
+
 document.addEventListener('DOMContentLoaded', () => {
     const notepad = document.getElementById('notepad');
     const statusElement = document.getElementById('status');
     const saveBtn = document.getElementById('saveBtn');
     const loadBtn = document.getElementById('loadBtn');
     const noteidSelect = document.getElementById('noteid-select');
+
+    // Trigger loadNote when selection changes (including Select2 events)
+    // (Moved after all DOM element declarations)
+    if (noteidSelect) {
+        // For native select change
+        noteidSelect.addEventListener('change', () => {
+            let selectedId = noteidSelect.value || (window.$ && $(noteidSelect).val());
+            if (selectedId) {
+                window.location.hash = selectedId;
+                noteId = selectedId;
+                loadNote(selectedId);
+            }
+        });
+        // For Select2: listen to select2:select and select2:unselect (for allowClear)
+        if (window.$ && $(noteidSelect).on) {
+            $(noteidSelect).on('select2:select', function(e) {
+                let selectedId = e.params.data.id;
+                if (selectedId) {
+                    window.location.hash = selectedId;
+                    noteId = selectedId;
+                    loadNote(selectedId);
+                }
+            });
+            $(noteidSelect).on('select2:clear', function(e) {
+                // Optionally clear the note if desired
+                // notepad.value = '';
+            });
+        }
+    }
+
     // Prepopulate select with note IDs from data/ directory
-    const existingIds = ['1', '2']; // from data/ directory
     function populateNoteIdSelect(ids, currentId) {
         noteidSelect.innerHTML = '';
         ids.forEach(id => {
@@ -68,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Populate select and load note
-    populateNoteIdSelect(existingIds, noteId);
+    getNoteIds();
     loadNote(noteId);
     
     // Set up auto-save functionality
@@ -194,6 +224,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Save note data to server
     function saveNote(id, content) {
+        if (!content) {
+            statusElement.textContent = 'Nothing to save';
+            return;
+        }
+        statusElement.textContent = 'Saving...';
         fetch(`/api/notes/${id}`, {
             method: 'POST',
             headers: {
@@ -209,10 +244,29 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .then(data => {
             statusElement.textContent = 'Saved';
+            getNoteIds();
         })
         .catch(error => {
             console.error('Error saving note:', error);
             statusElement.textContent = 'Error saving';
         });
+    }
+
+    function getNoteIds() {
+        return fetch('/api/notes')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch note IDs');
+                }
+                return response.json();
+            })
+            .then(data => {
+                populateNoteIdSelect(data.ids || [], noteId)
+                return data.ids || [];
+            })
+            .catch(error => {
+                console.error('Error fetching note IDs:', error);
+                return [];
+            });
     }
 });

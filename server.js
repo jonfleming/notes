@@ -72,6 +72,21 @@ app.post('/api/notes/:id', async (req, res) => {
   }
 });
 
+// Get Existing Note IDs
+app.get('/api/notes', async (req, res) => {
+  try {
+    const files = await fs.readdir(dataDir);
+    const noteIds = files
+      .filter(file => file.endsWith('.json'))
+      .map(file => path.basename(file, '.json'));
+    
+    res.json({ ids: noteIds });
+  } catch (err) {
+    console.error('Error getting note IDs:', err);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 // Serve the main app for all other routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
